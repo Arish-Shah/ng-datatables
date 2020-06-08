@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Options } from './models/options.model';
 
 @Component({
   selector: 'ng-datatables',
@@ -10,7 +11,11 @@ import { Component, OnInit } from '@angular/core';
   styles: [],
 })
 export class NgDatatablesComponent implements OnInit {
+  @Input('options') options: Options;
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.options);
+  }
 }
