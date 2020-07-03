@@ -8,8 +8,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start:example": "ng serve ng-datatables-example",
-    "build:lib": "ng build ng-datatables"
+    "build:lib": "ng build ng-datatables",
+    "watch:lib": "ng build ng-datatables --watch",
+    "start:app": "ng serve ng-datatables-example"
   },
   "private": true,
   "dependencies": {
