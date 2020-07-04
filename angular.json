@@ -36,9 +36,7 @@
               "projects/ng-datatables/tsconfig.lib.json",
               "projects/ng-datatables/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -64,9 +62,13 @@
               "projects/ng-datatables-example/src/assets"
             ],
             "styles": [
-              "projects/ng-datatables-example/src/styles.css"
+              "projects/ng-datatables-example/src/styles.css",
+              "node_modules/datatables.net-dt/css/jquery.dataTables.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/datatables.net/js/jquery.dataTables.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -127,9 +129,7 @@
               "projects/ng-datatables-example/src/favicon.ico",
               "projects/ng-datatables-example/src/assets"
             ],
-            "styles": [
-              "projects/ng-datatables-example/src/styles.css"
-            ],
+            "styles": ["projects/ng-datatables-example/src/styles.css"],
             "scripts": []
           }
         },
@@ -141,9 +141,7 @@
               "projects/ng-datatables-example/tsconfig.spec.json",
               "projects/ng-datatables-example/e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
@@ -159,6 +157,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "ng-datatables"
 }
