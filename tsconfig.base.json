@@ -16,9 +16,9 @@
       "dom"
     ],
     "paths": {
-      "ng-datatables": [
-        "dist/ng-datatables/ng-datatables",
-        "dist/ng-datatables"
+      "datatables": [
+        "dist/datatables/datatables",
+        "dist/datatables"
       ]
     }
   }

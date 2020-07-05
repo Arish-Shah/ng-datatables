@@ -1,0 +1,14 @@
+{
+  "name": "@arish-shah/datatables",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^10.0.2",
+    "@angular/core": "^10.0.2",
+    "@angular/animations": "~10.0.2",
+    "@angular/cdk": "^10.0.1",
+    "@angular/material": "^10.0.1"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}
