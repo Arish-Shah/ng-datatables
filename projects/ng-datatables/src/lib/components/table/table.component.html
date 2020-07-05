@@ -1,1 +1,27 @@
-<h1>Table Works</h1>
+<div *ngIf="crud.create" class="add-container">
+  <a [routerLink]="['add']"><button>+ Add</button></a>
+</div>
+
+<table datatable class="row-border hover" *ngIf="data.length > 0">
+  <thead>
+    <tr>
+      <th *ngFor="let column of columns">
+        {{ column.name }}
+      </th>
+      <th *ngIf="crud.update || crud.delete">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data">
+      <td *ngFor="let column of columns">
+        {{ item[column.data] | transform: column.format }}
+      </td>
+      <td *ngIf="crud.update || crud.delete" class="actions">
+        <button *ngIf="crud.update" [routerLink]="['edit', item['id']]">
+          Edit
+        </button>
+        <button *ngIf="crud.delete" (click)="onDelete(item.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

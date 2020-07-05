@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { DataTablesModule } from 'angular-datatables';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { DataTablesModule } from 'angular-datatables';
 
 import { NgDatatablesComponent } from './ng-datatables.component';
 import { TableComponent } from './components/table/table.component';
@@ -12,7 +14,7 @@ import { Transform } from './pipes/transform.pipe';
 const appRoutes: Routes = [
   { path: '', component: TableComponent },
   { path: 'add', component: AddComponent },
-  { path: 'edit', component: EditComponent }
+  { path: 'edit/:id', component: EditComponent }
 ];
 
 @NgModule({
@@ -26,7 +28,9 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     RouterModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes),
+    FormsModule,
     DataTablesModule
   ],
   exports: [NgDatatablesComponent]

@@ -1,1 +1,17 @@
-<h1>add works</h1>
+<h2>Create Operation</h2>
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <div class="form-group" *ngFor="let column of columns">
+    <label for="{{ column.data }}">{{ column.name }}:</label>
+    <input
+      class="form-control"
+      type="text"
+      name="{{ column.data }}"
+      id="{{ column.data }}"
+      required
+      ngModel
+      autofocus
+    />
+  </div>
+  <button type="submit">Submit</button>
+  <a [routerLink]="['/']"><button type="button">Cancel</button></a>
+</form>

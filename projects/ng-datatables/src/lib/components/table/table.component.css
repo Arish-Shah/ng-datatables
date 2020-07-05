@@ -1,0 +1,17 @@
+.add-container {
+  text-align: right;
+  padding: 1rem 0 2rem;
+}
+
+.add-container button {
+  font-size: 1rem;
+  padding: 3px 8px;
+}
+
+.actions {
+  text-align: center;
+}
+
+.actions > button:first-of-type {
+  margin-right: 5px;
+}
