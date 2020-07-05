@@ -1,3 +1,7 @@
-# Angular-Datatables (with CRUD Actions)
+# Angular-Datatables (with CRUD Operations)
+
+## Features
 
 ## Installation
+
+## Usage

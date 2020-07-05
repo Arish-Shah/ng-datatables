@@ -1,6 +1,5 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Options } from './models/options.model';
-import { DataService } from './services/data.service';
 
 @Component({
   selector: 'ng-datatable',
@@ -9,9 +8,7 @@ import { DataService } from './services/data.service';
 export class NgDatatablesComponent implements OnInit {
   @Input('options') options: Options;
 
-  constructor(private service: DataService) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this.service.init(this.options);
-  }
+  ngOnInit(): void {}
 }

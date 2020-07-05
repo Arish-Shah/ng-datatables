@@ -16,5 +16,4 @@ export interface Options {
     added?: () => void;
     deleted?: () => void;
   };
-  datatableSettings?: DataTables.Settings;
 }
