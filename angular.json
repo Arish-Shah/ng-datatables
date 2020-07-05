@@ -65,7 +65,8 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/datatables-example/src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": ["numeral"]
           },
           "configurations": {
             "production": {
