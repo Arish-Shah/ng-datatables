@@ -36,9 +36,7 @@
               "projects/datatables/tsconfig.lib.json",
               "projects/datatables/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -143,9 +141,7 @@
               "projects/datatables-example/tsconfig.spec.json",
               "projects/datatables-example/e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
