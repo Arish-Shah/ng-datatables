@@ -1,32 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Options } from './models/options.model';
-import { NgDatatablesService } from './ng-datatables.service';
+import { DataService } from './services/data.service';
 
 @Component({
   selector: 'ng-datatable',
-  templateUrl: './ng-datatables.component.html',
+  template: `<router-outlet></router-outlet>`,
   styles: []
 })
 export class NgDatatablesComponent implements OnInit {
   @Input('options') options: Options;
-  data = [];
 
-  constructor(private service: NgDatatablesService) {}
+  constructor(private service: DataService) {}
 
   ngOnInit(): void {
     this.service.init(this.options);
-
-    this.service.data.subscribe((data) => {
-      this.data = data;
-      console.log(data);
-    });
-  }
-
-  onEdit(data) {
-    console.log(data);
-  }
-
-  onDelete(id) {
-    console.log(id);
   }
 }
