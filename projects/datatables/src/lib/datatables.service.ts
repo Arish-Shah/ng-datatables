@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Options } from './models/options.model';
-import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class DatatablesService {
   /* Main Data */
   raw;
   data = [];
-  dataSubject = new BehaviorSubject([]);
+  dataSubject = new Subject();
 
   /* CRUD URLs with Options */
   createURL: string;
@@ -59,6 +59,7 @@ export class DatatablesService {
     this.read();
   }
 
+  /* Function to convert firebase response to array */
   firebase(response) {
     const data = [];
     Object.keys(response).forEach((item) => {
@@ -81,10 +82,10 @@ export class DatatablesService {
   }
 
   read() {
-    this.http.get(this.readURL).subscribe((response) => {
-      // This function call only required for firebase
+    this.http.get(this.readURL).subscribe((response: any) => {
       this.raw = response;
-      this.data = this.firebase(response);
+      if (response.data) this.data = response.data;
+      else this.data = this.firebase(response);
       this.dataSubject.next(this.data.slice());
     });
   }

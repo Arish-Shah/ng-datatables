@@ -31,13 +31,23 @@ export class DatatablesComponent implements OnInit {
   /* For adding and editing */
   newItem = {};
 
+  /* Loading Spinner */
+  isLoading = true;
+
   constructor(private service: DatatablesService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.service.init(this.options);
-    this.dataSubscription = this.service.dataSubject.subscribe((data) => {
-      this.dataSource.data = data;
-    });
+    this.dataSubscription = this.service.dataSubject.subscribe(
+      (data: any) => {
+        this.dataSource.data = data;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.isLoading = false;
+      }
+    );
     this.tableColumns = this.service.tableColumns;
     this.popupColumns = this.service.popupColumns;
     this.crud = this.service.crud;
