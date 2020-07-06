@@ -1,19 +1,29 @@
-<h1>Update Operation</h1>
-<p>Enter Details</p>
-<div mat-dialog-content>
-  <mat-form-field
-    appearance="fill"
-    required
-    *ngFor="let column of data.popupColumns"
-  >
-    <mat-label>{{ column.name }}</mat-label>
-    <input matInput [(ngModel)]="data.editingItem[column.data]" required />
-  </mat-form-field>
-  <br />
-</div>
-<div mat-dialog-actions align="end">
-  <button mat-button (click)="onCancelClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data.editingItem" cdkFocusInitial>
-    Submit
-  </button>
-</div>
+<form [formGroup]="editForm">
+  <h1>Update Operation</h1>
+  <div mat-dialog-content>
+    <mat-form-field
+      appearance="fill"
+      *ngFor="let column of data.popupColumns"
+      required
+    >
+      <mat-label>{{ column.name }}</mat-label>
+      <input
+        matInput
+        [formControlName]="column.data"
+        [type]="getType(column.format)"
+        required
+      />
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancelClick()">Cancel</button>
+    <button
+      mat-raised-button
+      color="primary"
+      [mat-dialog-close]="returnData"
+      [disabled]="disabled"
+    >
+      Save
+    </button>
+  </div>
+</form>

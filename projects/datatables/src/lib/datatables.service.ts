@@ -10,7 +10,9 @@ export class DatatablesService {
   options: Options;
 
   /* Main Data */
-  data = new BehaviorSubject([]);
+  raw;
+  data = [];
+  dataSubject = new BehaviorSubject([]);
 
   /* CRUD URLs with Options */
   createURL: string;
@@ -73,11 +75,31 @@ export class DatatablesService {
     return columns;
   }
 
+  create(item) {
+    this.data.unshift({ id: 'flajfklalfalakf', ...item });
+    this.dataSubject.next(this.data.slice());
+  }
+
   read() {
     this.http.get(this.readURL).subscribe((response) => {
       // This function call only required for firebase
-      const data = this.firebase(response);
-      this.data.next(data);
+      this.raw = response;
+      this.data = this.firebase(response);
+      this.dataSubject.next(this.data.slice());
     });
+  }
+
+  update(updatedItem) {
+    const index = this.data.findIndex(
+      (data) => data[this.id] === updatedItem[this.id]
+    );
+    this.data[index] = updatedItem;
+    this.dataSubject.next(this.data.slice());
+  }
+
+  delete(id) {
+    const index = this.data.findIndex((data) => data[this.id] === id);
+    this.data.splice(index, 1);
+    this.dataSubject.next(this.data.slice());
   }
 }

@@ -30,13 +30,12 @@ export class DatatablesComponent implements OnInit {
 
   /* For adding and editing */
   newItem = {};
-  editingItem;
 
   constructor(private service: DatatablesService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.service.init(this.options);
-    this.dataSubscription = this.service.data.subscribe((data) => {
+    this.dataSubscription = this.service.dataSubject.subscribe((data) => {
       this.dataSource.data = data;
     });
     this.tableColumns = this.service.tableColumns;
@@ -68,26 +67,20 @@ export class DatatablesComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        console.log(result);
-      }
+      if (result) this.service.create(result);
     });
   }
 
   openEdit(item) {
-    this.editingItem = { ...item };
-
     const dialogRef = this.dialog.open(EditComponent, {
       width: '600px',
       data: {
         popupColumns: this.popupColumns,
-        editingItem: this.editingItem
+        editingItem: { ...item }
       }
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        console.log(result);
-      }
+      if (result) this.service.update(result);
     });
   }
 
@@ -97,9 +90,7 @@ export class DatatablesComponent implements OnInit {
       data: { id }
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        console.log(result);
-      }
+      if (result) this.service.delete(result);
     });
   }
 
