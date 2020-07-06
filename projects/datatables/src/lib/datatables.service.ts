@@ -19,14 +19,20 @@ export class DatatablesService {
   deleteURL: string;
   crud = { create: false, read: true, update: false, delete: false };
 
+  /* id Key */
+  id: string;
+
   /* Columns */
-  columns = [];
+  tableColumns = [];
+  popupColumns = [];
 
   constructor(private http: HttpClient) {}
 
   init(options: Options) {
     this.options = options;
-    this.columns = this.options.datatableOptions.columns;
+    this.id = this.options.id || 'id';
+    this.tableColumns = this.options.datatableOptions.columns;
+    this.popupColumns = this.getPopupColumns();
     this.setURLs();
   }
 
@@ -51,11 +57,27 @@ export class DatatablesService {
     this.read();
   }
 
+  firebase(response) {
+    const data = [];
+    Object.keys(response).forEach((item) => {
+      data.push({ id: item, ...response[item] });
+    });
+    return data;
+  }
+
+  getPopupColumns() {
+    const columns = [];
+    this.tableColumns.forEach((column) => {
+      if (column.data !== this.id) columns.push(column);
+    });
+    return columns;
+  }
+
   read() {
-    this.http
-      .get(this.readURL)
-      .subscribe((response: { status: string; data: any[] }) => {
-        this.data.next(response.data);
-      });
+    this.http.get(this.readURL).subscribe((response) => {
+      // This function call only required for firebase
+      const data = this.firebase(response);
+      this.data.next(data);
+    });
   }
 }

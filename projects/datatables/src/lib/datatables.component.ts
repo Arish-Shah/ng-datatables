@@ -5,7 +5,12 @@ import { Subscription } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+
 import { Options } from './models/options.model';
+import { MatDialog } from '@angular/material/dialog';
+import { AddComponent } from './dialogs/add/add.component';
+import { EditComponent } from './dialogs/edit/edit.component';
+import { DeleteComponent } from './dialogs/delete/delete.component';
 
 @Component({
   selector: 'ng-datatable',
@@ -19,24 +24,31 @@ export class DatatablesComponent implements OnInit {
 
   dataSource = new MatTableDataSource();
   dataSubscription: Subscription;
-  columns = [];
+  tableColumns = [];
+  popupColumns = [];
   crud;
 
-  constructor(private service: DatatablesService) {}
+  /* For adding and editing */
+  newItem = {};
+  editingItem;
+
+  constructor(private service: DatatablesService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.service.init(this.options);
     this.dataSubscription = this.service.data.subscribe((data) => {
       this.dataSource.data = data;
     });
-    this.columns = this.service.columns;
+    this.tableColumns = this.service.tableColumns;
+    this.popupColumns = this.service.popupColumns;
     this.crud = this.service.crud;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.setNew();
   }
 
   getColumns() {
-    const columns = this.columns.map((column) => column.data);
+    const columns = this.tableColumns.map((column) => column.data);
     if (this.crud.update || this.crud.delete) columns.push('actions');
     return columns;
   }
@@ -47,15 +59,53 @@ export class DatatablesComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  onAdd() {
-    console.log('adding');
+  openAdd() {
+    const dialogRef = this.dialog.open(AddComponent, {
+      width: '600px',
+      data: {
+        popupColumns: this.popupColumns,
+        newItem: this.newItem
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log(result);
+      }
+    });
   }
 
-  onEdit(item) {
-    console.log(item);
+  openEdit(item) {
+    this.editingItem = { ...item };
+
+    const dialogRef = this.dialog.open(EditComponent, {
+      width: '600px',
+      data: {
+        popupColumns: this.popupColumns,
+        editingItem: this.editingItem
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log(result);
+      }
+    });
   }
 
-  onDelete(id) {
-    console.log(id);
+  openDelete(id) {
+    const dialogRef = this.dialog.open(DeleteComponent, {
+      width: '400px',
+      data: { id }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log(result);
+      }
+    });
+  }
+
+  setNew() {
+    this.popupColumns.forEach((column) => {
+      this.newItem[column.data] = null;
+    });
   }
 }

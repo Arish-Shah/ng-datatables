@@ -4,6 +4,7 @@ export interface Options {
   edit?: string;
   add?: string;
   delete?: string;
+  id?: string;
   datatableOptions: {
     columns: {
       name: string;

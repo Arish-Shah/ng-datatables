@@ -11,11 +11,11 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.options = {
-      baseAPIUrl: 'http://dummy.restapiexample.com/api/v1',
-      get: 'employees',
-      edit: 'update/:id',
-      add: 'create',
-      delete: 'delete/:id',
+      baseAPIUrl: 'https://employees-demo-api.firebaseio.com',
+      get: 'employees.json',
+      edit: ':id.json',
+      add: 'employees.json',
+      delete: ':id.json',
       datatableOptions: {
         columns: [
           {
