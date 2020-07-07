@@ -15,10 +15,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { DatatablesComponent } from './datatables.component';
-import { Transform } from './pipes/transform.pipe';
 import { AddComponent } from './dialogs/add/add.component';
 import { EditComponent } from './dialogs/edit/edit.component';
 import { DeleteComponent } from './dialogs/delete/delete.component';
+import { Transform } from './pipes/transform.pipe';
 
 @NgModule({
   declarations: [
@@ -43,6 +43,12 @@ import { DeleteComponent } from './dialogs/delete/delete.component';
     MatProgressSpinnerModule,
     MatProgressBarModule
   ],
-  exports: [DatatablesComponent]
+  exports: [
+    DatatablesComponent,
+    AddComponent,
+    EditComponent,
+    DeleteComponent,
+    Transform
+  ]
 })
 export class DatatablesModule {}

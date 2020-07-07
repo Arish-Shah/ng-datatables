@@ -51,7 +51,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/datatables-example",
+            "outputPath": "docs",
             "index": "projects/datatables-example/src/index.html",
             "main": "projects/datatables-example/src/main.ts",
             "polyfills": "projects/datatables-example/src/polyfills.ts",

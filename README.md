@@ -1,7 +1,7 @@
 # Angular-Datatables (with CRUD Operations)
 
-## Features
+## Implemented Features
 
-## Installation
+## Configuration
 
 ## Usage
