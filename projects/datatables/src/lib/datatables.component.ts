@@ -1,4 +1,12 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Input,
+  OnDestroy,
+  Output,
+  EventEmitter
+} from '@angular/core';
 import { DatatablesService } from './datatables.service';
 import { Subscription } from 'rxjs';
 
@@ -17,10 +25,14 @@ import { DeleteComponent } from './dialogs/delete/delete.component';
   templateUrl: 'datatables.component.html',
   styleUrls: ['./datatables.component.css']
 })
-export class DatatablesComponent implements OnInit {
+export class DatatablesComponent implements OnInit, OnDestroy {
   @Input('options') options: Options;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+
+  @Output() edited = new EventEmitter();
+  @Output() added = new EventEmitter();
+  @Output() deleted = new EventEmitter();
 
   dataSource = new MatTableDataSource();
   dataSubscription: Subscription;
@@ -33,6 +45,7 @@ export class DatatablesComponent implements OnInit {
 
   /* Loading Spinner */
   loading: boolean;
+  loadingSubscription: Subscription;
 
   constructor(private service: DatatablesService, public dialog: MatDialog) {}
 
@@ -49,7 +62,9 @@ export class DatatablesComponent implements OnInit {
       }
     );
 
-    this.service.loading.subscribe((l) => (this.loading = l));
+    this.loadingSubscription = this.service.loading.subscribe(
+      (status) => (this.loading = status)
+    );
 
     this.tableColumns = this.service.tableColumns;
     this.popupColumns = this.service.popupColumns;
@@ -81,7 +96,7 @@ export class DatatablesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.service.create(result);
+        this.service.create(result, this.added);
       }
     });
   }
@@ -95,7 +110,7 @@ export class DatatablesComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) this.service.update(result);
+      if (result) this.service.update(result, this.edited);
     });
   }
 
@@ -105,7 +120,7 @@ export class DatatablesComponent implements OnInit {
       data: { id }
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) this.service.delete(result);
+      if (result) this.service.delete(result, this.deleted);
     });
   }
 
@@ -113,5 +128,10 @@ export class DatatablesComponent implements OnInit {
     this.popupColumns.forEach((column) => {
       this.newItem[column.data] = null;
     });
+  }
+
+  ngOnDestroy() {
+    this.dataSubscription.unsubscribe();
+    this.loadingSubscription.unsubscribe();
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Options } from './models/options.model';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -87,13 +87,14 @@ export class DatatablesService {
     this.loading.next(false);
   }
 
-  create(item) {
+  create(item, e: EventEmitter<any>) {
     if (this.createURL) {
       this.showLoading();
       this.http.post(this.createURL, item).subscribe(
         (response) => {
           this.read();
           if (this.options.events.added) this.options.events.added(response);
+          e.emit(response);
         },
         (error) => this.errorCallback(error),
         () => this.hideLoading()
@@ -114,7 +115,7 @@ export class DatatablesService {
     );
   }
 
-  update(updatedItem) {
+  update(updatedItem, e: EventEmitter<any>) {
     if (this.updateURL) {
       this.showLoading();
       const url = this.updateURL.replace(`:${this.id}`, updatedItem[this.id]);
@@ -122,6 +123,7 @@ export class DatatablesService {
         (response) => {
           this.read();
           if (this.options.events.edited) this.options.events.edited(response);
+          e.emit(response);
         },
         (error) => this.errorCallback(error),
         () => this.hideLoading()
@@ -129,7 +131,7 @@ export class DatatablesService {
     }
   }
 
-  delete(id) {
+  delete(id, e: EventEmitter<any>) {
     if (this.deleteURL) {
       this.showLoading();
       const url = this.deleteURL.replace(`:${this.id}`, id);
@@ -137,6 +139,7 @@ export class DatatablesService {
         () => {
           this.read();
           if (this.options.events.deleted) this.options.events.deleted();
+          e.emit();
         },
         (error) => console.log(error),
         () => this.hideLoading()
