@@ -12,6 +12,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { DatatablesComponent } from './datatables.component';
 import { Transform } from './pipes/transform.pipe';
@@ -39,7 +40,8 @@ import { DeleteComponent } from './dialogs/delete/delete.component';
     MatInputModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatProgressBarModule
   ],
   exports: [DatatablesComponent]
 })

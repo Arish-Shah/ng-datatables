@@ -13,8 +13,9 @@ export interface Options {
     }[];
   };
   events?: {
-    edited?: () => void;
-    added?: () => void;
+    edited?: (response?: any) => void;
+    added?: (response?: any) => void;
     deleted?: () => void;
+    error?: (error?: any) => void;
   };
 }

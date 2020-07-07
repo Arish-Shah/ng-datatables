@@ -77,17 +77,27 @@ export class DatatablesService {
   }
 
   create(item) {
-    this.data.unshift({ id: 'flajfklalfalakf', ...item });
-    this.dataSubject.next(this.data.slice());
+    if (this.createURL) {
+      this.http.post(this.createURL, item).subscribe(
+        (response) => {
+          this.read();
+          if (this.options.events.added) this.options.events.added(response);
+        },
+        (error) => this.errorCallback(error)
+      );
+    }
   }
 
   read() {
-    this.http.get(this.readURL).subscribe((response: any) => {
-      this.raw = response;
-      if (response.data) this.data = response.data;
-      else this.data = this.firebase(response);
-      this.dataSubject.next(this.data.slice());
-    });
+    this.http.get(this.readURL).subscribe(
+      (response: any) => {
+        this.raw = response;
+        if (response.data) this.data = response.data;
+        else this.data = this.firebase(response).reverse();
+        this.dataSubject.next(this.data.slice());
+      },
+      (error) => this.errorCallback(error)
+    );
   }
 
   update(updatedItem) {
@@ -99,8 +109,24 @@ export class DatatablesService {
   }
 
   delete(id) {
-    const index = this.data.findIndex((data) => data[this.id] === id);
-    this.data.splice(index, 1);
-    this.dataSubject.next(this.data.slice());
+    if (this.deleteURL) {
+      const url = this.deleteURL.replace(`:${this.id}`, id);
+      this.http.delete(url).subscribe(
+        () => {
+          this.read();
+          if (this.options.events.deleted) this.options.events.deleted();
+        },
+        (error) => console.log(error)
+      );
+    }
+    // const index = this.data.findIndex((data) => data[this.id] === id);
+    // this.data.splice(index, 1);
+    // this.dataSubject.next(this.data.slice());
+  }
+
+  errorCallback(error) {
+    if (this.options.events.error) {
+      this.options.events.error(error);
+    }
   }
 }

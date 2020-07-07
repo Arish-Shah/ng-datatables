@@ -13,9 +13,9 @@ export class AppComponent {
     this.options = {
       baseAPIUrl: 'https://employees-demo-api.firebaseio.com',
       get: 'employees.json',
-      edit: ':id.json',
+      edit: 'employees/:id.json',
       add: 'employees.json',
-      delete: ':id.json',
+      delete: 'employees/:id.json',
       datatableOptions: {
         columns: [
           {
@@ -40,9 +40,15 @@ export class AppComponent {
         ]
       },
       events: {
-        edited: () => console.log('edited callback'),
-        added: () => console.log('added callback'),
-        deleted: () => console.log('deleted callback')
+        edited: (response) => {
+          console.log('Edited callback', { response });
+        },
+        added: (response) => {
+          console.log('Added callback', { response });
+        },
+        deleted: () => {
+          console.log('Deleted callback');
+        }
       }
     };
   }

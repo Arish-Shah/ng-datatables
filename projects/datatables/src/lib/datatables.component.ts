@@ -77,7 +77,9 @@ export class DatatablesComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) this.service.create(result);
+      if (result) {
+        this.service.create(result);
+      }
     });
   }
 
