@@ -101,6 +101,14 @@ export class DatatablesService {
   }
 
   update(updatedItem) {
+    if (this.updateURL) {
+      const url = this.updateURL.replace(`:${this.id}`, updatedItem[this.id]);
+      this.http.put(url, updatedItem).subscribe((response) => {
+        this.read();
+        if (this.options.events.edited) this.options.events.edited(response);
+      });
+    }
+
     const index = this.data.findIndex(
       (data) => data[this.id] === updatedItem[this.id]
     );
@@ -119,9 +127,6 @@ export class DatatablesService {
         (error) => console.log(error)
       );
     }
-    // const index = this.data.findIndex((data) => data[this.id] === id);
-    // this.data.splice(index, 1);
-    // this.dataSubject.next(this.data.slice());
   }
 
   errorCallback(error) {
