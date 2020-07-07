@@ -32,7 +32,7 @@ export class DatatablesComponent implements OnInit {
   newItem = {};
 
   /* Loading Spinner */
-  isLoading = true;
+  loading: boolean;
 
   constructor(private service: DatatablesService, public dialog: MatDialog) {}
 
@@ -41,13 +41,16 @@ export class DatatablesComponent implements OnInit {
     this.dataSubscription = this.service.dataSubject.subscribe(
       (data: any) => {
         this.dataSource.data = data;
-        this.isLoading = false;
+        this.loading = false;
       },
       (error) => {
         console.log(error);
-        this.isLoading = false;
+        this.loading = false;
       }
     );
+
+    this.service.loading.subscribe((l) => (this.loading = l));
+
     this.tableColumns = this.service.tableColumns;
     this.popupColumns = this.service.popupColumns;
     this.crud = this.service.crud;

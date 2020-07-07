@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Options } from './models/options.model';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -27,6 +27,9 @@ export class DatatablesService {
   /* Columns */
   tableColumns = [];
   popupColumns = [];
+
+  /* Loading indicator */
+  loading = new BehaviorSubject(true);
 
   constructor(private http: HttpClient) {}
 
@@ -76,14 +79,24 @@ export class DatatablesService {
     return columns;
   }
 
+  showLoading() {
+    this.loading.next(true);
+  }
+
+  hideLoading() {
+    this.loading.next(false);
+  }
+
   create(item) {
     if (this.createURL) {
+      this.showLoading();
       this.http.post(this.createURL, item).subscribe(
         (response) => {
           this.read();
           if (this.options.events.added) this.options.events.added(response);
         },
-        (error) => this.errorCallback(error)
+        (error) => this.errorCallback(error),
+        () => this.hideLoading()
       );
     }
   }
@@ -96,35 +109,37 @@ export class DatatablesService {
         else this.data = this.firebase(response).reverse();
         this.dataSubject.next(this.data.slice());
       },
-      (error) => this.errorCallback(error)
+      (error) => this.errorCallback(error),
+      () => this.hideLoading()
     );
   }
 
   update(updatedItem) {
     if (this.updateURL) {
+      this.showLoading();
       const url = this.updateURL.replace(`:${this.id}`, updatedItem[this.id]);
-      this.http.put(url, updatedItem).subscribe((response) => {
-        this.read();
-        if (this.options.events.edited) this.options.events.edited(response);
-      });
+      this.http.put(url, updatedItem).subscribe(
+        (response) => {
+          this.read();
+          if (this.options.events.edited) this.options.events.edited(response);
+        },
+        (error) => this.errorCallback(error),
+        () => this.hideLoading()
+      );
     }
-
-    const index = this.data.findIndex(
-      (data) => data[this.id] === updatedItem[this.id]
-    );
-    this.data[index] = updatedItem;
-    this.dataSubject.next(this.data.slice());
   }
 
   delete(id) {
     if (this.deleteURL) {
+      this.showLoading();
       const url = this.deleteURL.replace(`:${this.id}`, id);
       this.http.delete(url).subscribe(
         () => {
           this.read();
           if (this.options.events.deleted) this.options.events.deleted();
         },
-        (error) => console.log(error)
+        (error) => console.log(error),
+        () => this.hideLoading()
       );
     }
   }

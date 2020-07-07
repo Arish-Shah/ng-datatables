@@ -1,3 +1,9 @@
+<mat-progress-bar
+  class="loader"
+  mode="indeterminate"
+  *ngIf="loading"
+></mat-progress-bar>
+
 <div class="container">
   <div class="header">
     <mat-form-field>
@@ -51,8 +57,6 @@
       <tr mat-header-row *matHeaderRowDef="getColumns()"></tr>
       <tr mat-row *matRowDef="let row; columns: getColumns()"></tr>
     </table>
-
-    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
 
     <mat-paginator
       [pageSizeOptions]="[10, 20, 50]"
