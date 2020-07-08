@@ -18,7 +18,7 @@ import { DatatablesComponent } from './datatables.component';
 import { AddComponent } from './dialogs/add/add.component';
 import { EditComponent } from './dialogs/edit/edit.component';
 import { DeleteComponent } from './dialogs/delete/delete.component';
-import { Transform } from './pipes/transform.pipe';
+import { Format } from './pipes/format.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import { Transform } from './pipes/transform.pipe';
     AddComponent,
     EditComponent,
     DeleteComponent,
-    Transform
+    Format
   ],
   imports: [
     BrowserModule,
@@ -43,12 +43,6 @@ import { Transform } from './pipes/transform.pipe';
     MatProgressSpinnerModule,
     MatProgressBarModule
   ],
-  exports: [
-    DatatablesComponent,
-    AddComponent,
-    EditComponent,
-    DeleteComponent,
-    Transform
-  ]
+  exports: [DatatablesComponent, Format]
 })
 export class DatatablesModule {}

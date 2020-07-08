@@ -26,7 +26,7 @@
           {{ column.name }}
         </th>
         <td mat-cell *matCellDef="let element">
-          {{ element[column.data] | transform: column.format }}
+          {{ element[column.data] | format: column.format }}
         </td>
       </ng-container>
 

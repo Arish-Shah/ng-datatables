@@ -2,9 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import numeral from 'numeral';
 
 @Pipe({
-  name: 'transform'
+  name: 'format'
 })
-export class Transform implements PipeTransform {
+export class Format implements PipeTransform {
   transform(text: string, type: string) {
     switch (type) {
       case 'number':

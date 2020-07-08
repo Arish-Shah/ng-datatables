@@ -11,7 +11,7 @@
     "watch:lib": "ng build --watch datatables",
     "build:lib": "ng build --prod datatables",
     "start:app": "ng serve datatables-example",
-    "build:app": "ng build datatables-example --prod --deploy-url ./"
+    "build:app": "ng build datatables-example --prod --deploy-url ./ --base-href ./"
   },
   "private": true,
   "dependencies": {
