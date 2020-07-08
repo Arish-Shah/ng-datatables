@@ -24,6 +24,8 @@ Check out the live example [here](https://ng-datatables.netlify.com).
 
 - **Pagination:** By default each page shows 10 records. This can be changed by clicking the `Items Per Page` dropdown in the table footer.
 
+- **Form Validation:** Forms for Adding and Editing records are generated and validated using `ReactiveFormsModule`.
+
 - **Formatting:** By specifying the `format` in column array, the data fetched can be formatted. This is implemented using the `format` pipe. For e.g. `{{ 2000000 | format:"number" }}` will render `2,000,000`
 
 - **Events:** `added`, `edited` and `deleted` events can be listened to by providing their respective handlers in the `events` property or directly listening to them on the component as such:
