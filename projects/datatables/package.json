@@ -1,5 +1,5 @@
 {
-  "name": "@arish-shah/datatables",
+  "name": "ng-datatables",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^10.0.2",

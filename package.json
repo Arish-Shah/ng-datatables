@@ -10,7 +10,8 @@
     "e2e": "ng e2e",
     "watch:lib": "ng build --watch datatables",
     "build:lib": "ng build --prod datatables",
-    "start:app": "ng serve datatables-example"
+    "start:app": "ng serve datatables-example",
+    "build:app": "ng build datatables-example --prod --deploy-url ./"
   },
   "private": true,
   "dependencies": {
