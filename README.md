@@ -2,9 +2,7 @@
 
 Angular library for implementing CRUD operations with Datatables.
 
-Check out the live example [here](https://ng-datatables.netlify.com).
-
-[![Netlify Status](https://api.netlify.com/api/v1/badges/a40621ff-9b9b-418f-89f3-a6f4ffadadcf/deploy-status)](https://app.netlify.com/sites/ng-datatables/deploys)
+Check out the live example [here](https://arish-shah.github.io/ng-datatables/).
 
 ## Features Implemented
 
